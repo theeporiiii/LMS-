@@ -1,0 +1,45 @@
+
+.home1 {
+    background-image: url('../assets/images.jfif'); /* Replace with your background image URL */
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .content {
+    text-align: center;
+    color: white;
+    background-color: rgba(0, 0, 0, 0.5); /* Slightly transparent background for better text visibility */
+    padding: 20px;
+    border-radius: 10px;
+  }
+  
+  h1 {
+    margin-bottom: 20px;
+  }
+  
+  .buttons {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+  }
+  
+  .btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    color: white;
+  }
+  
+  .sign-in {
+    background-color: #007bff; /* Blue background for Sign In */
+  }
+  
+  .sign-up {
+    background-color: #28a745; /* Green background for Sign Up */
+  }
