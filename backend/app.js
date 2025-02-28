@@ -8,6 +8,8 @@ require('./DB/Connection');
 // Routes
 const userRoute = require("./routes/userRoutes");
 const computerRoute = require("./routes/computerRoutes");  // Import the new computer route
+const bookingRoutes = require('./routes/bookingRoutes');
+
 
 const app = express();
 
@@ -19,6 +21,7 @@ app.use(cors());
 // Routes
 app.use('/api', userRoute); // User route path
 app.use('/api/computer', computerRoute); // Computer route path
+app.use('/api/booking', bookingRoutes); // Booking-related routes
 
 // Server listening
 app.listen(3008, () => {

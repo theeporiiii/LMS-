@@ -1,10 +1,9 @@
 const express = require('express');
-const  router = express.Router();
-const user = require('../model/user');
+const jwt = require('jsonwebtoken');
+const user = require('../model/user'); // Your user model
+const Cuser=require('../model/currentUser');
 
-
-router.use(express.json());
-
+const router = express.Router();
 
 //signup
 router.post('/post',async(req,res)=>{
@@ -20,35 +19,56 @@ router.post('/post',async(req,res)=>{
     }
 
 })
-//login
-router.post('/login',async(req,res)=>{
+
+router.post('/login', async (req, res) => {
     let u = req.body.username;
     let p = req.body.password;
     console.log(u);
     console.log(p);
-    const person = await user.findOne({username:u});
-    if (!person){
-        res.json({message:"user not found"});
-    }
+
     try {
-        if(person.password==p){
-            res.status(200).json({message:"successfully logged in",person})
+        const person = await user.findOne({ username: u });
+        
+        if (!person) {
+            return res.json({ message: "User not found" });
+        }
+
+        if (person.password === p) {
+            // Assuming person contains the data to be copied into cuser
+            const newCuser = new Cuser({
+                username: person.username,
+                password: person.password,
+                email: person.email, // Add more fields as necessary
+                // You can add other fields from person as needed
+            });
+
+            // Save the new cuser document to the database
+            await newCuser.save();
+
+            return res.status(200).json({ message: "Successfully logged in", person });
             
-        }else{
-            res.json({message:"login failed"})
+        } else {
+            return res.json({ message: "Login failed" });
         }
     } catch (error) {
-      console.log(error)  
+        console.log(error);
+        return res.status(500).json({ message: "Server error" });
     }
-})
+});
+
+// GET route to fetch all details from the Cuser collection
+router.get('/current-users', async (req, res) => {
+    try {
+        // Fetch all documents from the Cuser collection
+        const currentUsers = await Cuser.find({});
+
+        // Respond with the fetched data
+        res.status(200).json({ message: "Current users fetched successfully", currentUsers });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Internal server error" });
+    }
+});
 
 
-
-
-
-
-
-
-
-
-module.exports=router;
+module.exports = router; 

@@ -7,9 +7,9 @@ const computerSchema = mongoose.Schema({
     required: true, // Ensure that the computerId is provided
     unique: true,   // Ensure that each computer has a unique ID
   },
-  timeSlots: {
-    type: [String], // Array of time slots (can support multiple time slots if needed in the future)
-    required: true, // Ensure time slots are provided
+  lab: {
+    type: String,  // Lab is now a string (can represent the lab name or number)
+    required: true, // Ensure lab is provided
   },
   status: {
     type: String,
